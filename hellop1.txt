@@ -1,0 +1,1 @@
+{'token': 'd11d6f27-37de-4534-a915-b18ce3e7a617', 'username': 'hellop1', 'organization_id': '101', 'session_id': '70969cb3-b240-4310-931c-72a4503edbfc', 'role_id': '62011052aadbcc1442b4b159'}
