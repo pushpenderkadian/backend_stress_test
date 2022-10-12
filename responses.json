@@ -1,0 +1,23 @@
+[
+    {'_id': '6346212d2fe7f19543529d43', 'classroom_name': 'asdkkje', 'section': 'd', 'subject_code': 'd', 'cover': {'logo': 0, 'color': '#9002b4'
+        }, 'classroom_code': '25wsud', 'lectures': None, 'last_modified': 1665540397, 'created_at': 1665540397
+    },
+    {'_id': '6346212d2fe7f19543529d44', 'classroom_name': 'asdkkje', 'section': 'd', 'subject_code': 'd', 'cover': {'logo': 0, 'color': '#9002b4'
+        }, 'classroom_code': 'qsgpwr', 'lectures': None, 'last_modified': 1665540397, 'created_at': 1665540397
+    },
+    {'_id': '6346212d2fe7f19543529d3f', 'classroom_name': 'asdkkje', 'section': 'd', 'subject_code': 'd', 'cover': {'logo': 0, 'color': '#9002b4'
+        }, 'classroom_code': 'qsyzot', 'lectures': None, 'last_modified': 1665540397, 'created_at': 1665540397
+    },
+    {'_id': '6346212d2fe7f19543529d41', 'classroom_name': 'asdkkje', 'section': 'd', 'subject_code': 'd', 'cover': {'logo': 0, 'color': '#9002b4'
+        }, 'classroom_code': 'y8sofd', 'lectures': None, 'last_modified': 1665540397, 'created_at': 1665540397
+    },
+    {'_id': '6346212d2fe7f19543529d3e', 'classroom_name': 'asdkkje', 'section': 'd', 'subject_code': 'd', 'cover': {'logo': 0, 'color': '#9002b4'
+        }, 'classroom_code': 'lpjd68', 'lectures': None, 'last_modified': 1665540397, 'created_at': 1665540397
+    },
+    {'_id': '6346212d2fe7f19543529d42', 'classroom_name': 'asdkkje', 'section': 'd', 'subject_code': 'd', 'cover': {'logo': 0, 'color': '#9002b4'
+        }, 'classroom_code': 'f6ibvl', 'lectures': None, 'last_modified': 1665540397, 'created_at': 1665540397
+    },
+    {'_id': '6346212d2fe7f19543529d40', 'classroom_name': 'asdkkje', 'section': 'd', 'subject_code': 'd', 'cover': {'logo': 0, 'color': '#9002b4'
+        }, 'classroom_code': 'd74tw0', 'lectures': None, 'last_modified': 1665540397, 'created_at': 1665540397
+    }
+]

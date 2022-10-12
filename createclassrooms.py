@@ -3,8 +3,7 @@ import asyncio
 import time
 import base64
 
-file=open("responses.json","w")
-file2=open("authtokens.json","w")
+file=open("responseccr.json","w")
 async def get_async(url):
     async with httpx.AsyncClient() as client:
         return await client.post("https://classrooms.api.edvora.me/classrooms", headers={"Authorization":url},json=cons)
@@ -18,10 +17,6 @@ async def launch():
     data2 = [resp for resp in resps]
     file.write(str(data))
     file.close()
-    for i in data:
-        if("<Response [200 OK]>" in str(data2[data.index(i)])):
-            file2.write(base64.b64encode(str(i).encode("ascii")).decode('utf-8'))
-            file2.write("\n")
     
     for status_code in data2:
         print(status_code)
