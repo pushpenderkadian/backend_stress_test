@@ -29,7 +29,7 @@ def create_user(typ):
 
 
 def login(username,password):
-    print("Logging in...")
+    print("Logging in.."+username)
     req = requests.post(aut_api + 'login', json={'username': username, 'password': password})
     return base64.b64encode(req.content).decode('utf-8')
     # return req.json()
@@ -88,18 +88,25 @@ def create_polls(data):
     print("Creating a poll...")
     return requests.post(class_api + 'classroom/polls', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
 
+
 usersdata=[]
 usersdata.append(create_user(0).json())
 auth=login(usersdata[0]["username"],"00")
-
+file=open(usersdata[0]["username"]+".txt","w")
+file.write("Username: "+usersdata[0]["username"]+"\nPassword: 00\n")
+file.write("Auth: "+auth+"\n")
 #create 10 student accounts
 for i in range(10):
     usersdata.append(create_user(1).json())
 
+file.write("Students usernames: ")
+for i in range(1,len(usersdata)):
+    file.write(usersdata[i]["username"]+" , ")
+file.write("\n")
 c_cid=create_classroom(''.join(random.choices(string.ascii_letters, k=20)))
 print("Classroom created with id: "+c_cid)
+file.write("Classroom id: "+c_cid+"\n")
 
-print(usersdata)
 # add members to classroom
 usernames=[]
 for i in range(1,len(usersdata)):
@@ -107,54 +114,114 @@ for i in range(1,len(usersdata)):
 add_members({"members":usernames})
 
 # create 600 feed
-print("creating 600 feed posts")
-for i in range(0,600):
+succs=0
+failed=0
+for i in range(0,200):
     data={"content": ''.join(random.choices(string.ascii_letters, k=1000))}
-    create_feeds(data)
-    print("feed post "+str(i)+" created")
+    stats=create_feeds(data)
+    if(stats.status_code==200):
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create feed post: "+str(stats.json())+"\n")
+file.write("Successfully Created "+str(succs)+" feed posts\n")
+file.write("=======================================================\n")
 
 # create 600 materials
+succs=0
+failed=0
 arr=["note","syllabus"]
 arr2=[True,False]
-for i in range(0,600):
-    data={"title": ''.join(random.choices(string.ascii_letters, k=100)),"type":random.choice(arr),"description": ''.join(random.choices(string.ascii_letters, k=1000)),"post_to_feed":random.choice(arr2)}
-    create_materials(data)
-    print("material "+str(i)+" created")
+for i in range(0,200):
+    data={"title": ''.join(random.choices(string.ascii_letters, k=100)),"type":random.choice(arr),"description": ''.join(random.choices(string.ascii_letters, k=100)),"post_to_feed":random.choice(arr2)}
+    stats=create_materials(data)
+    if(stats.status_code==200):
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create material: "+str(stats.content)+"\n")
+file.write("Successfully Created "+str(succs)+" materials\n")
+file.write("=======================================================\n")
 
 # create 600 assignments
 assigns=[]
-for i in range(0,600):
+succs=0
+failed=0
+for i in range(0,200):
     data={"title": ''.join(random.choices(string.ascii_letters, k=100)),"description": ''.join(random.choices(string.ascii_letters, k=1000)),"due_date":int(datetime.datetime.now().timestamp())+random.randint(99999,9999999),"points":{"grading_type":"overall","points":100},"post_to_feed":random.choice(arr2)}
-    assigns.append(create_assignments(data).json())
-    print("assignment "+str(i)+" created")
+    stats=create_assignments(data)
+    if(stats.status_code==200):
+        assigns.append(stats.json())
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create assignment: "+str(stats.content)+"\n")
+file.write("Successfully Created "+str(succs)+" assignments\n")
+file.write("=======================================================\n")
 
 # submit assignments
+succs=0
+failed=0
 for i in range(1,len(usersdata)):
     auth=login(usersdata[i]["username"],"00")
     for j in assigns:
-        submit_assignment(j["_id"])
-        print("assignment submitted by "+usersdata[i]["username"])
+        stats=submit_assignment(j["_id"])
+        if(stats.status_code==200):
+            succs+=1
+        else:
+            failed+=1
+            file.write("Failed to submit assignment: "+str(stats.content)+"\n")
+    file.write("Successfully Submitted "+str(succs)+" assignments\n")
+    succs=0
+    failed=0
+    print("assignment submitted by "+usersdata[i]["username"])
 auth=login(usersdata[0]["username"],"00")
-
+file.write("=======================================================\n")
 
 #create 600 polls
-for i in range(0,600):
+succs=0
+failed=0
+for i in range(0,200):
     data={"title": "".join(random.choices(string.ascii_letters, k=100)),"questions":gen_ques(),"post_to_feed":random.choice(arr2)}
-    pollss.append(create_polls(data).json())
-    print("poll "+str(i)+" created")
+    stats=create_polls(data)
+    if(stats.status_code==200):
+        pollss.append(stats.json())
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create poll: "+str(stats.content)+"\n")
+file.write("Successfully Created "+str(succs)+" polls\n")
 
 #publish polls
-
+succs=0
+failed=0
 for i in pollss:
-    launch_poll(i["_id"])
+    stats=launch_poll(i["_id"])
+    if(stats.status_code==200):
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to publish poll: "+str(stats.content)+"\n")
+file.write("Successfully Published "+str(succs)+" polls\n")
 
 #submit polls
+succs=0
+failed=0
 for i in range(1,len(usersdata)):
     auth=login(usersdata[i]["username"],"00")
     for j in pollss:
-        print(submit_poll(j["_id"],len(j["questions"])))
-        print("Poll submitted by "+usersdata[i]["username"])
+        stats=submit_poll(j["_id"],len(j["questions"]))
+        if(stats.status_code==200):
+            succs+=1
+        else:
+            failed+=1
+            file.write("Failed to submit poll: "+str(stats.content)+"\n")
+    file.write("Successfully Submitted "+str(succs)+" polls by user "+usersdata[i]["username"]+"\n")
+    succs=0
+    failed=0
 auth=login(usersdata[0]["username"],"00")
+
+file.close()
 
 
 

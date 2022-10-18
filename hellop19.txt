@@ -1,1 +1,0 @@
-{'token': '9623cbfb-ca7f-4277-aec6-eb2c0d2b93e5', 'username': 'hellop19', 'organization_id': '101', 'session_id': 'b5aa856d-5541-4ff8-96b0-099d1cd3d457', 'role_id': '62011052aadbcc1442b4b159'}

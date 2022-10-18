@@ -1,0 +1,7 @@
+Username: NyWcTmoKsIcAwXGOalTX
+Password: 00
+Auth: eyJ0b2tlbiI6IjRiODMwNWFiLWY1NWItNDkxMC04ZTA5LWI0ODgwYTc3ZjRjOSIsInVzZXJuYW1lIjoiTnlXY1Rtb0tzSWNBd1hHT2FsVFgiLCJ3aGVuX2FjY2VwdGVkX3Rlcm1zIjo1Njk1ODg5LCJvcmdhbml6YXRpb25faWQiOiIxMDEiLCJzZXNzaW9uX2lkIjoiNTUzYTMxMjktZjVmYi00ZDgzLTk1MDAtNWVlZmVjYzMxOTg5Iiwicm9sZV9pZCI6IjYyMDExMDUyYWFkYmNjMTQ0MmI0YjE1OSJ9
+Students usernames: tmKazSyzgmIaEHDBnwoF , wZdUGScROLXrsdLcSOAW , WqZRPjFJzbebjHRAfrtA , nnWyHMkbPjEjJOQfHnLt , hcVoHaqzaNvQLadbQnIb , ovCGocGBFzNVvBppwExg , GBnHIinjtZrfoFubQffN , iTGryaajbKztyvQppPfH , dcvAuIcZgDdGRVyWIYmo , koXhUWfezbWGtOwzZDUc , 
+Classroom id: 634eb0354938e6a5a5b219e8
+Successfully Created 200 feed posts
+=======================================================
