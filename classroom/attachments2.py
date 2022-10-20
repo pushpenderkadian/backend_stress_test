@@ -1,0 +1,116 @@
+import requests
+import base64
+import json,random,string,datetime,time
+
+auth="eyJ0b2tlbiI6ImM0ZmFmYTQ5LTBkMDktNGExMy1hMzc5LTVlMTI2NjgxODI3MiIsInVzZXJuYW1lIjoiaGVsbG9wMjEiLCJvcmdhbml6YXRpb25faWQiOiIxMDEiLCJzZXNzaW9uX2lkIjoiZDI1ZGUzMzktNTQxNC00YTdhLWEyMjMtMjE2ZWY5OWVlNTIzIiwicm9sZV9pZCI6IjYyMDExMDUyYWFkYmNjMTQ0MmI0YjE1OSJ9"
+c_cid="634f7fd04938e6a5a5b232c0"
+aut_api = "https://auth.api.edvora.me/"
+class_api = "https://classrooms.api.edvora.me/"
+
+timstmp=1666194600
+
+
+def add_attachment(nfs):
+    print("adding attachment : "+str(nfs))
+    nrid=requests.post(f"https://files.api.edvora.me/upload/record?no_of_files={nfs}", headers={'Authorization': auth})
+    print("========================")
+    nrid=nrid.json()["record_id"]
+    nflid1=[]
+
+    nflid=["5a15d31d-dc1f-4637-9bb2-067ca2acf0c0","d9d25115-9017-4010-8b97-a0a7cfc87949","7c411e0d-2b5b-4635-87c9-9d660eb7e1ee","fd4193b0-9436-40ca-a6f9-b787c4c9f2a8","1d1bc0f4-369d-41a4-8898-c6c90af369a1","66b486fc-ab67-48d3-be52-85bc4d7fcf2a","2c025a70-fc08-4193-9a2d-af9e0e46cab9","a867a3ea-1a5e-45a7-b8d9-87b57c07e829","2492deb0-700a-4250-b0ef-b395467e10e0","0b95eb14-a868-4723-877d-2011d7694d8b"]
+    for i in range(nfs):
+        nflid1.append(nflid[i])
+    rslt=[]
+    rslt.append(nrid)
+    rslt.append(nflid1)
+    return rslt
+def create_user(typ):
+    username=''.join(random.choices(string.ascii_letters, k=20))
+    arr=["62011052aadbcc1442b4b159","6201106aaadbcc1442b4b15a"]
+    data={
+    "username": username,
+    "full_name": username,
+    "date_of_birth": 5695889,
+    "gender": "male",
+    "email_address": f"{username}@fgdre.team",
+    "mobile_number": username+"12",
+    "nationality": "Edvorian",
+    "address": "Edvora HQ",
+    "password": "00",
+    "when_accepted_terms": 5695889,
+    "profile_key": "6755941390055587",
+    "role_id": arr[typ],
+    "organization_id": "101"
+}
+    return requests.post(aut_api + 'register', json=data)
+
+
+def login(username,password):
+    print("Logging in.."+username)
+    req = requests.post(aut_api + 'login', json={'username': username, 'password': password})
+    return base64.b64encode(req.content).decode('utf-8')
+    # return req.json()
+
+def create_classroom(cname):
+    print("Creating a classroom...")
+    data={"classroom_name":cname,"section":"d","subject_code":"d","cover":{"logo":0,"color":"#9002B4"}}
+    resp= (requests.post(class_api + 'classrooms', headers={'Authorization': auth}, json=data)).json()
+    return resp["_id"]
+
+def add_members(data):
+    print("Adding members...")
+    return requests.post(class_api + 'classroom/members', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
+def create_feeds(data):
+    print("Creating a feed...")
+    return requests.post(class_api + 'classroom/feed', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
+
+def create_materials(data):
+    print("Creating a material...")
+    return requests.post(class_api + 'classroom/materials/syllabus', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
+
+def create_assignments(data):
+    print("Creating an assignment...")
+    return requests.post(class_api + 'classroom/assignments', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
+
+# usersdata=[]
+# usersdata.append(create_user(0).json())
+# auth=login(usersdata[0]["username"],"00")
+file=open("classroom/response2"+".txt","w")
+# file.write("Username: "+usersdata[0]["username"]+"\nPassword: 00\n")
+# file.write("Auth: "+auth+"\n")
+# #create 10 student accounts
+# c_cid=create_classroom(''.join(random.choices(string.ascii_letters, k=20)))
+# print("Classroom created with id: "+c_cid)
+# file.write("Classroom id: "+c_cid+"\n")
+
+# # add members to classroom
+# usernames=[]
+# for i in range(1,len(usersdata)):
+#     usernames.append(usersdata[i]["username"])
+# add_members({"members":usernames})
+
+# create 600 feed
+succs=0
+failed=0
+for i in range(0,1):
+    abc=add_attachment(random.randint(1,10))
+    fids=[]
+    
+    data={"attachments":abc[1],"content": ''.join(random.choices(string.ascii_letters, k=1000)),"record_id": abc[0]}
+    stats=create_feeds(data)
+    if(stats.status_code==200):
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create feed post: "+str(stats.content)+"\n")
+file.write("Successfully Created "+str(succs)+" feed posts\n")
+file.write("=======================================================\n")
+
+
+file.close()
+
+
+
+
+
+
