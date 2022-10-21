@@ -10,6 +10,20 @@ class_api = "https://classrooms.api.edvora.me/"
 timstmp=1666194600
 
 
+def add_attachments(nfs):           #for only image file(polls)
+    file.write("adding attachment : "+str(nfs)+"\n")
+    nrid=requests.post(f"https://files.api.edvora.me/upload/record?no_of_files={nfs}", headers={'Authorization': auth})
+    nrid=nrid.json()["record_id"]
+    nflid1=[]
+
+    nflid=["e144a206-ea19-41cc-b1ed-81a8946fe14e","b86c38fa-0b3c-4021-adb5-7d3c60b87243","300787ff-7426-4e0e-b520-64b6118e0890","8b01cef7-01fb-41d4-b6bf-4a5930f7accc","76901c7d-2eb8-4e10-be6f-863dc2e880d2","f3b0c548-7e81-4522-9d62-4679e81e7f7e","a9eb60e4-c4e0-4b66-b032-743158ce683a","163a7c63-e288-4e68-9195-547955150fad","3ef3cb91-0fbb-4b3a-9724-003c6414b7a0","5a15d31d-dc1f-4637-9bb2-067ca2acf0c0"]
+    for i in range(nfs):
+        nflid1.append(nflid[i])
+    rslt=[]
+    rslt.append(nrid)
+    rslt.append(nflid1)
+    return rslt
+
 def add_attachment(nfs):
     file.write("adding attachment : "+str(nfs)+"\n")
     nrid=requests.post(f"https://files.api.edvora.me/upload/record?no_of_files={nfs}", headers={'Authorization': auth})
@@ -23,6 +37,7 @@ def add_attachment(nfs):
     rslt.append(nrid)
     rslt.append(nflid1)
     return rslt
+
 def create_user(typ):
     username=''.join(random.choices(string.ascii_letters, k=20))
     arr=["62011052aadbcc1442b4b159","6201106aaadbcc1442b4b15a"]
@@ -79,7 +94,7 @@ def gen_ques():
     ques=[]
     for i in range(0,random.randint(1,10)):
         file.write("adding question : "+str(i)+"\n")
-        abc=add_attachment(random.randint(0,10))
+        abc=add_attachments(random.randint(0,10))
         ques.append({"question":''.join(random.choices(string.ascii_letters, k=100)),"options":gen_opts(),"attachments":abc[1],"record_id": abc[0]})
     return ques
 
@@ -102,14 +117,14 @@ file.write("Classroom id: "+c_cid+"\n")
 
 
 #uncomment this section to use pre-existing accounts
-# usrname="hellop24"
+# usrname="hellop21"
 # passwrd="00"
 
-# c_cid="634ed7794938e6a5a5b232b9"
+# c_cid="635288c418a1b47f9b782a45"
 
 
 # auth=login(usrname,passwrd)
-# file=open(usrname+".txt","w")
+# file=open("classroom/"+usrname+".txt","w")
 
 
 # file.write("Classroom id: "+c_cid+"\n")

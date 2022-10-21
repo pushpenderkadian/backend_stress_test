@@ -1,0 +1,46 @@
+Classroom id: 635288c418a1b47f9b782a45
+Creating feed 0
+adding attachment : 6
+Failed to create feed post: b'Filekey is Invalid'
+Creating feed 1
+adding attachment : 5
+Failed to create feed post: b'Filekey is Invalid'
+Successfully Created 0 feed posts
+=======================================================
+Creating material 0...
+adding attachment : 9
+Failed to create material: b'Filekey is Invalid'
+Creating material 1...
+adding attachment : 6
+Failed to create material: b'Filekey is Invalid'
+Successfully Created 0 materials
+=======================================================
+Creating assignment 0...
+adding attachment : 8
+Failed to create assignment: b'Filekey is Invalid'
+Creating assignment 1...
+adding attachment : 8
+Failed to create assignment: b'Filekey is Invalid'
+Successfully Created 0 assignments
+=======================================================
+Creating poll 0...
+adding question : 0
+adding attachment : 5
+Failed to create poll: b'Filekey is Invalid'
+Creating poll 1...
+adding question : 0
+adding attachment : 2
+adding question : 1
+adding attachment : 2
+adding question : 2
+adding attachment : 3
+adding question : 3
+adding attachment : 1
+adding question : 4
+adding attachment : 5
+adding question : 5
+adding attachment : 9
+adding question : 6
+adding attachment : 2
+Failed to create poll: b'Filekey is Invalid'
+Successfully Created 0 polls

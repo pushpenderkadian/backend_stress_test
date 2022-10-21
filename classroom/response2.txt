@@ -1,53 +1,15 @@
-Username: gAzejWFHJqPNHUkwNojy
+Username: GMYSlTUGfITCopnoNHcr
 Password: 00
-Auth: eyJ0b2tlbiI6ImI1NGIzODBjLTk5ZTMtNDJhYy05NWM0LTM4ZDQxMDQ1MTgwYSIsInVzZXJuYW1lIjoiZ0F6ZWpXRkhKcVBOSFVrd05vankiLCJ3aGVuX2FjY2VwdGVkX3Rlcm1zIjo1Njk1ODg5LCJvcmdhbml6YXRpb25faWQiOiIxMDEiLCJzZXNzaW9uX2lkIjoiZjI2YTJiZTYtYmRkMC00NjA2LWFhZmItMTM3MTVmZGQ5NjVlIiwicm9sZV9pZCI6IjYyMDExMDUyYWFkYmNjMTQ0MmI0YjE1OSIsInRoZW1lIjowfQ==
-Classroom id: 6352738818a1b47f9b782920
-Creating feed 0
-adding attachment : 5
-Creating feed 1
-adding attachment : 2
-Successfully Created 2 feed posts
-=======================================================
-Creating material 0...
-adding attachment : 2
-Creating material 1...
-adding attachment : 8
-Successfully Created 2 materials
-=======================================================
-Creating assignment 0...
-adding attachment : 10
-Creating assignment 1...
-adding attachment : 10
-Successfully Created 2 assignments
-=======================================================
+Auth: eyJ0b2tlbiI6IjU5YzU2NDUwLTFiNTUtNDE4OS1iZDhlLWI1ODExZWRjMGRhOSIsInVzZXJuYW1lIjoiR01ZU2xUVUdmSVRDb3Bub05IY3IiLCJ3aGVuX2FjY2VwdGVkX3Rlcm1zIjo1Njk1ODg5LCJvcmdhbml6YXRpb25faWQiOiIxMDEiLCJzZXNzaW9uX2lkIjoiOTA2NmNlMjItZmM2Ny00NGU4LTk3YzAtOWY3Y2ZlMjRjOTcwIiwicm9sZV9pZCI6IjYyMDExMDUyYWFkYmNjMTQ0MmI0YjE1OSIsInRoZW1lIjowfQ==
+Classroom id: 63528d2118a1b47f9b782a76
 Creating poll 0...
 adding question : 0
-adding attachment : 4
+adding attachment : 7
 adding question : 1
-adding attachment : 6
-adding question : 2
-adding attachment : 3
-adding question : 3
 adding attachment : 5
-adding question : 4
-adding attachment : 10
-adding question : 5
-adding attachment : 1
-adding question : 6
-adding attachment : 9
-adding question : 7
-adding attachment : 4
-adding question : 8
-adding attachment : 8
-adding question : 9
-adding attachment : 2
 Creating poll 1...
 adding question : 0
-adding attachment : 8
+adding attachment : 5
 adding question : 1
-adding attachment : 7
-adding question : 2
-adding attachment : 7
-adding question : 3
-adding attachment : 4
+adding attachment : 0
 Successfully Created 2 polls
