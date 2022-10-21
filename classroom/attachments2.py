@@ -2,8 +2,8 @@ import requests
 import base64
 import json,random,string,datetime,time
 
-auth="eyJ0b2tlbiI6ImM0ZmFmYTQ5LTBkMDktNGExMy1hMzc5LTVlMTI2NjgxODI3MiIsInVzZXJuYW1lIjoiaGVsbG9wMjEiLCJvcmdhbml6YXRpb25faWQiOiIxMDEiLCJzZXNzaW9uX2lkIjoiZDI1ZGUzMzktNTQxNC00YTdhLWEyMjMtMjE2ZWY5OWVlNTIzIiwicm9sZV9pZCI6IjYyMDExMDUyYWFkYmNjMTQ0MmI0YjE1OSJ9"
-c_cid="634f7fd04938e6a5a5b232c0"
+auth=""
+c_cid=""
 aut_api = "https://auth.api.edvora.me/"
 class_api = "https://classrooms.api.edvora.me/"
 
@@ -11,9 +11,8 @@ timstmp=1666194600
 
 
 def add_attachment(nfs):
-    print("adding attachment : "+str(nfs))
+    file.write("adding attachment : "+str(nfs)+"\n")
     nrid=requests.post(f"https://files.api.edvora.me/upload/record?no_of_files={nfs}", headers={'Authorization': auth})
-    print("========================")
     nrid=nrid.json()["record_id"]
     nflid1=[]
 
@@ -71,30 +70,41 @@ def create_materials(data):
 def create_assignments(data):
     print("Creating an assignment...")
     return requests.post(class_api + 'classroom/assignments', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
+def gen_opts():
+    opts=[]
+    for i in range(0,random.randint(2,8)):
+        opts.append(''.join(random.choices(string.ascii_letters, k=100)))
+    return opts
+def gen_ques():
+    ques=[]
+    for i in range(0,random.randint(1,10)):
+        file.write("adding question : "+str(i)+"\n")
+        abc=add_attachment(random.randint(0,10))
+        ques.append({"question":''.join(random.choices(string.ascii_letters, k=100)),"options":gen_opts(),"attachments":abc[1],"record_id": abc[0]})
+    return ques
 
-# usersdata=[]
-# usersdata.append(create_user(0).json())
-# auth=login(usersdata[0]["username"],"00")
+def create_polls(data):
+    print("Creating a poll...")
+    return requests.post(class_api + 'classroom/polls', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
+pollss=[]
+usersdata=[]
+usersdata.append(create_user(0).json())
+auth=login(usersdata[0]["username"],"00")
 file=open("classroom/response2"+".txt","w")
-# file.write("Username: "+usersdata[0]["username"]+"\nPassword: 00\n")
-# file.write("Auth: "+auth+"\n")
-# #create 10 student accounts
-# c_cid=create_classroom(''.join(random.choices(string.ascii_letters, k=20)))
-# print("Classroom created with id: "+c_cid)
-# file.write("Classroom id: "+c_cid+"\n")
+file.write("Username: "+usersdata[0]["username"]+"\nPassword: 00\n")
+file.write("Auth: "+auth+"\n")
+#create 10 student accounts
+c_cid=create_classroom(''.join(random.choices(string.ascii_letters, k=20)))
+print("Classroom created with id: "+c_cid)
+file.write("Classroom id: "+c_cid+"\n")
 
-# # add members to classroom
-# usernames=[]
-# for i in range(1,len(usersdata)):
-#     usernames.append(usersdata[i]["username"])
-# add_members({"members":usernames})
 
 # create 600 feed
 succs=0
 failed=0
-for i in range(0,1):
+for i in range(0,2):
+    file.write("Creating feed "+str(i)+"\n")
     abc=add_attachment(random.randint(1,10))
-    fids=[]
     
     data={"attachments":abc[1],"content": ''.join(random.choices(string.ascii_letters, k=1000)),"record_id": abc[0]}
     stats=create_feeds(data)
@@ -105,6 +115,56 @@ for i in range(0,1):
         file.write("Failed to create feed post: "+str(stats.content)+"\n")
 file.write("Successfully Created "+str(succs)+" feed posts\n")
 file.write("=======================================================\n")
+
+succs=0
+failed=0
+arr=["note","syllabus"]
+arr2=[True,False]
+for i in range(0,2):
+    file.write("Creating material "+str(i)+"...\n")
+    abc=add_attachment(random.randint(1,10))
+    data={"attachments":abc[1],"record_id": abc[0],"title": ''.join(random.choices(string.ascii_letters, k=100)),"type":random.choice(arr),"scheduled_at": timstmp,"description": ''.join(random.choices(string.ascii_letters, k=100)),"post_to_feed":random.choice(arr2)}
+    stats=create_materials(data)
+    if(stats.status_code==200):
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create material: "+str(stats.content)+"\n")
+file.write("Successfully Created "+str(succs)+" materials\n")
+file.write("=======================================================\n")
+
+# create 600 assignments
+assigns=[]
+succs=0
+failed=0
+for i in range(0,2):
+    file.write("Creating assignment "+str(i)+"...\n")
+    abc=add_attachment(random.randint(1,10))
+    data={"attachments":abc[1],"record_id": abc[0],"title": ''.join(random.choices(string.ascii_letters, k=100)),"scheduled_at": timstmp,"description": ''.join(random.choices(string.ascii_letters, k=1000)),"due_date":int(datetime.datetime.now().timestamp())+random.randint(99999,9999999),"points":{"grading_type":"overall","points":100},"post_to_feed":random.choice(arr2)}
+    stats=create_assignments(data)
+    if(stats.status_code==200):
+        assigns.append(stats.json())
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create assignment: "+str(stats.content)+"\n")
+file.write("Successfully Created "+str(succs)+" assignments\n")
+file.write("=======================================================\n")
+
+#create 600 polls
+succs=0
+failed=0
+for i in range(0,2):
+    file.write("Creating poll "+str(i)+"...\n")
+    data={"title": "".join(random.choices(string.ascii_letters, k=100)),"scheduled_at": timstmp,"questions":gen_ques(),"post_to_feed":random.choice(arr2)}
+    stats=create_polls(data)
+    if(stats.status_code==200):
+        pollss.append(stats.json())
+        succs+=1
+    else:
+        failed+=1
+        file.write("Failed to create poll: "+str(stats.content)+"\n")
+file.write("Successfully Created "+str(succs)+" polls\n")
 
 
 file.close()
