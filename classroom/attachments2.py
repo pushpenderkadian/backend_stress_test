@@ -123,7 +123,7 @@ arr2=[True,False]
 for i in range(0,2):
     file.write("Creating material "+str(i)+"...\n")
     abc=add_attachment(random.randint(1,10))
-    data={"attachments":abc[1],"record_id": abc[0],"title": ''.join(random.choices(string.ascii_letters, k=100)),"type":random.choice(arr),"scheduled_at": timstmp,"description": ''.join(random.choices(string.ascii_letters, k=100)),"post_to_feed":random.choice(arr2)}
+    data={"attachments":abc[1],"record_id": abc[0],"title": ''.join(random.choices(string.ascii_letters, k=100)),"type":random.choice(arr),"description": ''.join(random.choices(string.ascii_letters, k=100)),"post_to_feed":random.choice(arr2)}
     stats=create_materials(data)
     if(stats.status_code==200):
         succs+=1
@@ -140,7 +140,7 @@ failed=0
 for i in range(0,2):
     file.write("Creating assignment "+str(i)+"...\n")
     abc=add_attachment(random.randint(1,10))
-    data={"attachments":abc[1],"record_id": abc[0],"title": ''.join(random.choices(string.ascii_letters, k=100)),"scheduled_at": timstmp,"description": ''.join(random.choices(string.ascii_letters, k=1000)),"due_date":int(datetime.datetime.now().timestamp())+random.randint(99999,9999999),"points":{"grading_type":"overall","points":100},"post_to_feed":random.choice(arr2)}
+    data={"attachments":abc[1],"record_id": abc[0],"title": ''.join(random.choices(string.ascii_letters, k=100)),"description": ''.join(random.choices(string.ascii_letters, k=1000)),"due_date":int(datetime.datetime.now().timestamp())+random.randint(99999,9999999),"points":{"grading_type":"overall","points":100},"post_to_feed":random.choice(arr2)}
     stats=create_assignments(data)
     if(stats.status_code==200):
         assigns.append(stats.json())
@@ -156,7 +156,7 @@ succs=0
 failed=0
 for i in range(0,2):
     file.write("Creating poll "+str(i)+"...\n")
-    data={"title": "".join(random.choices(string.ascii_letters, k=100)),"scheduled_at": timstmp,"questions":gen_ques(),"post_to_feed":random.choice(arr2)}
+    data={"title": "".join(random.choices(string.ascii_letters, k=100)),"questions":gen_ques(),"post_to_feed":random.choice(arr2)}
     stats=create_polls(data)
     if(stats.status_code==200):
         pollss.append(stats.json())
