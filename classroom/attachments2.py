@@ -102,17 +102,17 @@ file.write("Classroom id: "+c_cid+"\n")
 
 
 #uncomment this section to use pre-existing accounts
-usrname="hellop24"
-passwrd="00"
+# usrname="hellop24"
+# passwrd="00"
 
-c_cid="634ed7794938e6a5a5b232b9"
-
-
-auth=login(usrname,passwrd)
-file=open(usrname+".txt","w")
+# c_cid="634ed7794938e6a5a5b232b9"
 
 
-file.write("Classroom id: "+c_cid+"\n")
+# auth=login(usrname,passwrd)
+# file=open(usrname+".txt","w")
+
+
+# file.write("Classroom id: "+c_cid+"\n")
 
 
 ##############################################
