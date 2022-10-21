@@ -87,6 +87,8 @@ def create_polls(data):
     print("Creating a poll...")
     return requests.post(class_api + 'classroom/polls', headers={'Authorization': auth, 'Classroom-Id': c_cid}, json=data)
 pollss=[]
+
+#comment this section if you want to use pre-existing user
 usersdata=[]
 usersdata.append(create_user(0).json())
 auth=login(usersdata[0]["username"],"00")
@@ -98,6 +100,22 @@ c_cid=create_classroom(''.join(random.choices(string.ascii_letters, k=20)))
 print("Classroom created with id: "+c_cid)
 file.write("Classroom id: "+c_cid+"\n")
 
+
+#uncomment this section to use pre-existing accounts
+usrname="hellop24"
+passwrd="00"
+
+c_cid="634ed7794938e6a5a5b232b9"
+
+
+auth=login(usrname,passwrd)
+file=open(usrname+".txt","w")
+
+
+file.write("Classroom id: "+c_cid+"\n")
+
+
+##############################################
 
 # create 600 feed
 succs=0
