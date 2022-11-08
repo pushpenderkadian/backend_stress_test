@@ -7,6 +7,7 @@ aut_api = "https://auth.api.edvora.me/"
 a_url="https://timetable.api.edvora.me/attendance"
 mem_url="https://classrooms.api.edvora.me/classroom/members/by_roles"
 eves_url="http://timetable.api.edvora.me/timetables/classroom"
+all_att={}
 
 def login(username,password):
     print("Logging in.."+username)
@@ -39,25 +40,40 @@ def get_att():
     return (att)
 def mark_att(id,dtt):
     print("Marking attendance...")
+    patt=get_att()
     print("classroom id: "+id+"\ndate: "+str(dtt)+"\nevent id: "+id)
-    resp= (requests.post(a_url, headers={'authorization': auth}, json={"event_id": id,"participants": get_att(),"date": dtt}))
+    resp= (requests.post(a_url, headers={'authorization': auth}, json={"event_id": id,"participants": patt,"date": dtt}))
+    if(resp.status_code==202):
+        for i in all_att:
+            if i["event_id"]==id and i["start_datetime"]==dtt:
+                print("Attendance already marked for this event\nupdating attendance...")
+                resp=(requests.patch("https://timetable.api.edvora.me/attendance/"+i["attendance_id"], headers={'authorization': auth}, json={"participants": patt}))
+
     return resp
 
-def fetch_only_non_recuring_events(time1,time2):
+def fetch_all_attendance(time1,time2):
+    resp= (requests.get(f"https://timetable.api.edvora.me/fetchattendance/classroom/{c_cid}?&from_date={time1}&until={time2}", headers={'authorization': auth})).json()
+    return resp
+
+def fetch_all_events(time1,time2):
     print("Fetching events...")
     resp= (requests.get(eves_url+f"/{c_cid}?start_date={time1}&end_date={time2}", headers={'authorization': auth})).json()
-    # print(resp)
     eves={}
     for i in resp:
         if i["rrule"]==None:
-            eves[i["_id"]]=i["start_datetime"]
+            x=[i["start_datetime"]]
+            eves[i["_id"]]=x
+        if i["rrule"]!=None:
+            eves[i["_id"]]=i["rrule"]
+    globals().update(all_att=fetch_all_attendance(time1,time2))
     return eves
 
 
 auth=login("hellop19","00")
 c_cid="635dca1030d8e11765990329"
-eves=fetch_only_non_recuring_events(1667241000,1669746600)
+eves=fetch_all_events(1667241000,1669746600)
+# print(eves)
 for i in eves:
-    resp=mark_att(i,eves[i])
-    print(f"response for marking event {i} : "+str(resp.status_code))
-# 
+    for j in eves[i]:
+        resp=mark_att(i,j)
+        print(f"response for marking event {i} : "+str(resp.status_code))
